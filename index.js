@@ -15,6 +15,14 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express() //nuestro servidor
 
+// ### EXPRESS SETTING ### //
+app.set('appName', 'Express Course')
+app.set('port', 3000)
+app.set('case sensitive routing', true) //para que las rutas tengan case sensitive
+
+//MIDDLEWARES
+app.use(morgan("dev"))
+
 //EJEMPLOS DE: METODOS HTTP EN EXPRESS - HTTP RESPONSE - REQUEST(BODY Y PARAMS) - QUERIES - METODO ALL -
 //METODOS HTTP EN EXPRESS (GET, POST PUT, PATCH, DELETE)
 
@@ -179,7 +187,9 @@ app.get('/dashboard', (req, res) => {
 
 */
 
+app.get('/UserName', (req, res) => {
+    res.send('Username route')
+})
 
-
-app.listen(3000)
-console.log(`server on port ${3000}`)
+app.listen(app.get('port'))
+console.log(`Server ${app.get('appName')} on port ${app.get('port')}`)
