@@ -14,6 +14,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const path = require('path')//nos permite concatenar directorios
+require('ejs')
 const app = express() //nuestro servidor
 
 const HomeRoutes = require('./routes/home')
@@ -23,6 +24,9 @@ const UserRoutes = require('./routes/users')
 app.set('appName', 'Express Course')
 app.set('port', 3000)
 app.set('case sensitive routing', true) //para que las rutas tengan case sensitive
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
+
 
 //MIDDLEWARES
 //app.use(morgan("dev"))
