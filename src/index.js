@@ -13,7 +13,11 @@
 
 const express = require('express')
 const morgan = require('morgan')
+const path = require('path')//nos permite concatenar directorios
 const app = express() //nuestro servidor
+
+const HomeRoutes = require('./routes/home')
+const UserRoutes = require('./routes/users')
 
 // ### EXPRESS SETTING ### //
 app.set('appName', 'Express Course')
@@ -21,7 +25,7 @@ app.set('port', 3000)
 app.set('case sensitive routing', true) //para que las rutas tengan case sensitive
 
 //MIDDLEWARES
-app.use(morgan("dev"))
+//app.use(morgan("dev"))
 
 //EJEMPLOS DE: METODOS HTTP EN EXPRESS - HTTP RESPONSE - REQUEST(BODY Y PARAMS) - QUERIES - METODO ALL -
 //METODOS HTTP EN EXPRESS (GET, POST PUT, PATCH, DELETE)
@@ -159,37 +163,24 @@ app.get('/dashboard', (req, res) => {
 })
  */
 
-/** MIDDLEWARES INTERCEPTOR
- * Puedo usar un middleware de otro desarrollador instalando paquetes etc
-    - Instalamos morgan desde la pagina de NPM
+// MIDDLEWARES INTERCEPTOR
+//Puedo usar un middleware de otro desarrollador instalando paquetes etc
+//    - Instalamos morgan desde la pagina de NPM
 
+app.use(express.json())
 app.use(morgan('dev')) //este middleware tan solo muestra mensajes por consola, como el tipo de protocolo http, el estado, nombre de la url etc.
 
-app.get('/profile', (req, res) => {
-    res.send('profile page')
+app.use(HomeRoutes)
+app.use(UserRoutes)
+
+app.get('/note.txt', (req, res) => {
+    res.send('este no es un archivo')
 })
 
-app.get('/about', (req, res) => {
-    res.send('about page')
-})
+//static files, siempre esta al final
+app.use("/public", express.static(path.join(__dirname, 'public')))
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
-app.use((req, res, next) => {
-    if(req.query.login === "carola@gmail.com") {
-        next()
-    }else{
-        res.send('no autorizado')
-    }
-})
-
-app.get('/dashboard', (req, res) => {
-    res.send('dashboard page')
-})
-
-*/
-
-app.get('/UserName', (req, res) => {
-    res.send('Username route')
-})
 
 app.listen(app.get('port'))
 console.log(`Server ${app.get('appName')} on port ${app.get('port')}`)
