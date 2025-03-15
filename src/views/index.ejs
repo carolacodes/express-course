@@ -2,4 +2,9 @@
     <h1>
         <%= title %>
     </h1>
+    <% if (isActive) { %>
+        <p>El servidor activo</p>
+    <% } else { %>
+        <p>El servidor esta inactivo</p>
+    <% } %>
 <%- include('partials/footer'); %>

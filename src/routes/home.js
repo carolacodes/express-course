@@ -3,8 +3,10 @@ const router = Router()
 
 
 router.get('/', (req, res) => {
+    let isActive = true
     res.render('index', {
-        title: 'index page'
+        title: 'index page',
+        isActive
     })
 })
 
